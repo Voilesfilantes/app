@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="theme-color" content="#07141f"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="Voiles Filantes"/>
+<meta name="description" content="Outils Voiles Filantes — Météo, Messages, Contrat"/>
+<link rel="manifest" href="manifest.json"/>
+<link rel="apple-touch-icon" href="icon-192.svg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&family=Playfair+Display:wght@600&display=swap" rel="stylesheet"/>
+<title>⛵ Voiles Filantes</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;}
+body{
+  background:#07141f;
+  font-family:'DM Sans',sans-serif;
+  color:#e8f4f8;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  /* fond animé */
+  background-image:
+    radial-gradient(ellipse 80% 60% at 20% 10%, rgba(10,40,70,0.8) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 80% 80%, rgba(7,50,60,0.6) 0%, transparent 60%);
+}
+
+/* Vagues décoratives */
+.waves{position:fixed;bottom:0;left:0;width:100%;height:140px;z-index:0;opacity:.18;pointer-events:none;}
+
+header{
+  padding:40px 24px 28px;
+  text-align:center;
+  position:relative;
+  z-index:1;
+}
+.logo{
+  font-size:42px;
+  margin-bottom:12px;
+  filter:drop-shadow(0 0 20px rgba(126,205,196,0.4));
+}
+.brand{
+  font-family:'Playfair Display',serif;
+  font-size:28px;
+  letter-spacing:.06em;
+  color:#e8f4f8;
+}
+.tagline{
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:#7ecdc4;
+  margin-top:6px;
+  opacity:.8;
+}
+
+/* Cards */
+.cards{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  padding:0 20px 40px;
+  max-width:460px;
+  width:100%;
+  margin:0 auto;
+  position:relative;
+  z-index:1;
+  flex:1;
+}
+
+.card{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.09);
+  border-radius:18px;
+  padding:22px 22px;
+  text-decoration:none;
+  color:#e8f4f8;
+  transition:all .2s ease;
+  position:relative;
+  overflow:hidden;
+}
+.card::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  opacity:0;
+  transition:opacity .2s;
+  border-radius:18px;
+}
+.card:active{transform:scale(.97);}
+
+/* Card variants */
+.card-meteo{ border-color:rgba(96,180,220,0.2); }
+.card-meteo::before{ background:linear-gradient(135deg,rgba(96,180,220,0.08),transparent); }
+.card-meteo:hover::before{ opacity:1; }
+.card-meteo .card-icon{ background:rgba(96,180,220,0.12); border-color:rgba(96,180,220,0.25); color:#60b4dc; }
+.card-meteo .card-arrow{ color:rgba(96,180,220,0.5); }
+
+.card-messages{ border-color:rgba(126,205,196,0.2); }
+.card-messages::before{ background:linear-gradient(135deg,rgba(126,205,196,0.08),transparent); }
+.card-messages:hover::before{ opacity:1; }
+.card-messages .card-icon{ background:rgba(126,205,196,0.12); border-color:rgba(126,205,196,0.25); color:#7ecdc4; }
+.card-messages .card-arrow{ color:rgba(126,205,196,0.5); }
+
+.card-contrat{ border-color:rgba(180,160,220,0.2); }
+.card-contrat::before{ background:linear-gradient(135deg,rgba(180,160,220,0.08),transparent); }
+.card-contrat:hover::before{ opacity:1; }
+.card-contrat .card-icon{ background:rgba(180,160,220,0.12); border-color:rgba(180,160,220,0.25); color:#b4a0dc; }
+.card-contrat .card-arrow{ color:rgba(180,160,220,0.5); }
+
+.card-icon{
+  width:56px;height:56px;
+  border-radius:14px;
+  border:1px solid;
+  display:flex;align-items:center;justify-content:center;
+  font-size:26px;
+  flex-shrink:0;
+}
+.card-body{ flex:1; }
+.card-title{
+  font-size:17px;
+  font-weight:500;
+  letter-spacing:.01em;
+  margin-bottom:4px;
+}
+.card-desc{
+  font-size:12px;
+  color:rgba(255,255,255,.42);
+  font-family:'DM Mono',monospace;
+  letter-spacing:.04em;
+  line-height:1.5;
+}
+.card-arrow{
+  font-size:20px;
+  flex-shrink:0;
+  transition:transform .2s;
+}
+.card:hover .card-arrow{ transform:translateX(3px); }
+
+/* Footer */
+footer{
+  text-align:center;
+  padding:0 24px 32px;
+  position:relative;
+  z-index:1;
+}
+.install-hint{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:20px;
+  padding:8px 16px;
+  font-size:11px;
+  color:rgba(255,255,255,.35);
+  font-family:'DM Mono',monospace;
+  letter-spacing:.05em;
+}
+.install-hint.hidden{ display:none; }
+
+/* Install banner */
+#install-banner{
+  display:none;
+  margin:0 20px 14px;
+  background:rgba(126,205,196,0.08);
+  border:1px solid rgba(126,205,196,0.25);
+  border-radius:14px;
+  padding:14px 18px;
+  align-items:center;
+  gap:12px;
+  position:relative;
+  z-index:1;
+  max-width:460px;
+  width:calc(100% - 40px);
+  margin-left:auto;margin-right:auto;
+}
+#install-banner.show{ display:flex; }
+#install-banner p{ font-size:13px; color:rgba(255,255,255,.7); flex:1; line-height:1.4; }
+#install-banner p span{ display:block; font-size:11px; color:#7ecdc4; font-family:'DM Mono',monospace; margin-top:2px; }
+#btn-install{
+  background:rgba(126,205,196,0.2);
+  border:1px solid rgba(126,205,196,0.4);
+  border-radius:9px;
+  color:#7ecdc4;
+  padding:8px 14px;
+  font-size:12px;
+  font-family:'DM Mono',monospace;
+  cursor:pointer;
+  white-space:nowrap;
+  flex-shrink:0;
+}
+</style>
+</head>
+<body>
+
+<!-- Vagues SVG -->
+<svg class="waves" viewBox="0 0 1440 140" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0,70 C180,120 360,20 540,70 C720,120 900,20 1080,70 C1260,120 1350,50 1440,70 L1440,140 L0,140 Z" fill="rgba(126,205,196,0.15)"/>
+  <path d="M0,90 C200,50 400,130 600,90 C800,50 1000,130 1200,90 C1300,70 1380,100 1440,90 L1440,140 L0,140 Z" fill="rgba(96,180,220,0.1)"/>
+</svg>
+
+<header>
+  <div class="logo">⛵</div>
+  <div class="brand">Voiles Filantes</div>
+  <div class="tagline">Marannah · Bonifacio, Corse</div>
+</header>
+
+<!-- Banner install PWA -->
+<div id="install-banner">
+  <p>Installer l'app sur l'écran d'accueil
+    <span>Accès rapide sans navigateur</span>
+  </p>
+  <button id="btn-install">Installer</button>
+</div>
+
+<div class="cards">
+
+  <a class="card card-meteo" href="https://voilesfilantes.github.io/station-voilesfilantes/" target="_blank">
+    <div class="card-icon">🌊</div>
+    <div class="card-body">
+      <div class="card-title">Station Météo</div>
+      <div class="card-desc">Vent · Vagues · Position · VRM<br/>Données live Marannah</div>
+    </div>
+    <div class="card-arrow">›</div>
+  </a>
+
+  <a class="card card-messages" href="https://voilesfilantes.github.io/messages-voilesfilantes/" target="_blank">
+    <div class="card-icon">💬</div>
+    <div class="card-body">
+      <div class="card-title">Messages clients</div>
+      <div class="card-desc">Veille · Présentation · Complet<br/>FR / EN · Porquerolles & Tapas</div>
+    </div>
+    <div class="card-arrow">›</div>
+  </a>
+
+  <a class="card card-contrat" href="https://contratpassagers2026.netlify.app/" target="_blank">
+    <div class="card-icon">📄</div>
+    <div class="card-body">
+      <div class="card-title">Contrat passager</div>
+      <div class="card-desc">Signature électronique<br/>FR / EN · PDF généré à bord</div>
+    </div>
+    <div class="card-arrow">›</div>
+  </a>
+
+</div>
+
+<footer>
+  <div class="install-hint" id="ios-hint">
+    ↑ Partager → "Sur l'écran d'accueil" pour installer
+  </div>
+</footer>
+
+<script>
+// ── PWA Install prompt (Android Chrome) ──────────────────
+let deferredPrompt = null;
+const banner = document.getElementById('install-banner');
+const btnInstall = document.getElementById('btn-install');
+const iosHint = document.getElementById('ios-hint');
+
+// Detect iOS
+const isIos = /iphone|ipad|ipod/i.test(navigator.userAgent);
+const isInStandaloneMode = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+
+if(isIos && !isInStandaloneMode){ iosHint.classList.remove('hidden'); }
+else { iosHint.classList.add('hidden'); }
+
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredPrompt = e;
+  banner.classList.add('show');
+});
+
+btnInstall.addEventListener('click', async () => {
+  if(!deferredPrompt) return;
+  deferredPrompt.prompt();
+  const { outcome } = await deferredPrompt.userChoice;
+  deferredPrompt = null;
+  banner.classList.remove('show');
+});
+
+window.addEventListener('appinstalled', () => { banner.classList.remove('show'); });
+
+// ── Service Worker ───────────────────────────────────────
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('sw.js').catch(()=>{});
+}
+</script>
+</body>
+</html>

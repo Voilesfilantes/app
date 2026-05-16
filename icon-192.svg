@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192">
+  <rect width="192" height="192" rx="40" fill="#07141f"/>
+  <rect width="192" height="192" rx="40" fill="url(#bg)"/>
+  <defs>
+    <radialGradient id="bg" cx="30%" cy="20%" r="80%">
+      <stop offset="0%" stop-color="#0d2a40"/>
+      <stop offset="100%" stop-color="#07141f"/>
+    </radialGradient>
+  </defs>
+  <!-- Voile -->
+  <polygon points="96,30 96,130 50,130" fill="rgba(126,205,196,0.9)"/>
+  <polygon points="96,45 96,130 140,130" fill="rgba(96,180,220,0.7)"/>
+  <!-- Mât -->
+  <line x1="96" y1="25" x2="96" y2="135" stroke="#e8f4f8" stroke-width="3" stroke-linecap="round"/>
+  <!-- Coque -->
+  <path d="M40,138 Q96,158 152,138 L148,148 Q96,162 44,148 Z" fill="rgba(126,205,196,0.8)"/>
+  <!-- Vague -->
+  <path d="M24,162 Q48,152 72,162 Q96,172 120,162 Q144,152 168,162" stroke="rgba(126,205,196,0.4)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+</svg>

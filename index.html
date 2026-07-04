@@ -23,13 +23,11 @@ body{
   min-height:100vh;
   display:flex;
   flex-direction:column;
-  /* fond animé */
   background-image:
     radial-gradient(ellipse 80% 60% at 20% 10%, rgba(10,40,70,0.8) 0%, transparent 60%),
     radial-gradient(ellipse 60% 50% at 80% 80%, rgba(7,50,60,0.6) 0%, transparent 60%);
 }
 
-/* Vagues décoratives */
 .waves{position:fixed;bottom:0;left:0;width:100%;height:140px;z-index:0;opacity:.18;pointer-events:none;}
 
 header{
@@ -59,7 +57,6 @@ header{
   opacity:.8;
 }
 
-/* Cards */
 .cards{
   display:flex;
   flex-direction:column;
@@ -116,6 +113,13 @@ header{
 .card-contrat .card-icon{ background:rgba(180,160,220,0.12); border-color:rgba(180,160,220,0.25); color:#b4a0dc; }
 .card-contrat .card-arrow{ color:rgba(180,160,220,0.5); }
 
+/* ── NAVIGATION (nouveau) ── */
+.card-nav{ border-color:rgba(0,255,153,0.2); }
+.card-nav::before{ background:linear-gradient(135deg,rgba(0,255,153,0.08),transparent); }
+.card-nav:hover::before{ opacity:1; }
+.card-nav .card-icon{ background:rgba(0,255,153,0.12); border-color:rgba(0,255,153,0.25); color:#00ff99; }
+.card-nav .card-arrow{ color:rgba(0,255,153,0.5); }
+
 .card-icon{
   width:56px;height:56px;
   border-radius:14px;
@@ -145,7 +149,6 @@ header{
 }
 .card:hover .card-arrow{ transform:translateX(3px); }
 
-/* Footer */
 footer{
   text-align:center;
   padding:0 24px 32px;
@@ -167,7 +170,6 @@ footer{
 }
 .install-hint.hidden{ display:none; }
 
-/* Install banner */
 #install-banner{
   display:none;
   margin:0 20px 14px;
@@ -202,7 +204,6 @@ footer{
 </head>
 <body>
 
-<!-- Vagues SVG -->
 <svg class="waves" viewBox="0 0 1440 140" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M0,70 C180,120 360,20 540,70 C720,120 900,20 1080,70 C1260,120 1350,50 1440,70 L1440,140 L0,140 Z" fill="rgba(126,205,196,0.15)"/>
   <path d="M0,90 C200,50 400,130 600,90 C800,50 1000,130 1200,90 C1300,70 1380,100 1440,90 L1440,140 L0,140 Z" fill="rgba(96,180,220,0.1)"/>
@@ -214,7 +215,6 @@ footer{
   <div class="tagline">Marannah · Bonifacio, Corse</div>
 </header>
 
-<!-- Banner install PWA -->
 <div id="install-banner">
   <p>Installer l'app sur l'écran d'accueil
     <span>Accès rapide sans navigateur</span>
@@ -229,6 +229,15 @@ footer{
     <div class="card-body">
       <div class="card-title">Station Météo</div>
       <div class="card-desc">Vent · Vagues · Position · VRM<br/>Données live Marannah</div>
+    </div>
+    <div class="card-arrow">›</div>
+  </a>
+
+  <a class="card card-nav" href="https://voilesfilantes.github.io/app/navigation.html" target="_blank">
+    <div class="card-icon">🧭</div>
+    <div class="card-body">
+      <div class="card-title">Navigation</div>
+      <div class="card-desc">Instruments · Vent · Cap · Vitesse<br/>Pilote automatique SeaTalk</div>
     </div>
     <div class="card-arrow">›</div>
   </a>
@@ -260,13 +269,11 @@ footer{
 </footer>
 
 <script>
-// ── PWA Install prompt (Android Chrome) ──────────────────
 let deferredPrompt = null;
 const banner = document.getElementById('install-banner');
 const btnInstall = document.getElementById('btn-install');
 const iosHint = document.getElementById('ios-hint');
 
-// Detect iOS
 const isIos = /iphone|ipad|ipod/i.test(navigator.userAgent);
 const isInStandaloneMode = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
 
@@ -289,7 +296,6 @@ btnInstall.addEventListener('click', async () => {
 
 window.addEventListener('appinstalled', () => { banner.classList.remove('show'); });
 
-// ── Service Worker ───────────────────────────────────────
 if('serviceWorker' in navigator){
   navigator.serviceWorker.register('sw.js').catch(()=>{});
 }

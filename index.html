@@ -120,6 +120,12 @@ header{
 .card-nav .card-icon{ background:rgba(0,255,153,0.12); border-color:rgba(0,255,153,0.25); color:#00ff99; }
 .card-nav .card-arrow{ color:rgba(0,255,153,0.5); }
 
+.card-resa{ border-color:rgba(212,175,55,0.25); }
+.card-resa::before{ background:linear-gradient(135deg,rgba(212,175,55,0.08),transparent); }
+.card-resa:hover::before{ opacity:1; }
+.card-resa .card-icon{ background:rgba(212,175,55,0.12); border-color:rgba(212,175,55,0.3); color:#d4af37; }
+.card-resa .card-arrow{ color:rgba(212,175,55,0.55); }
+
 .card-icon{
   width:56px;height:56px;
   border-radius:14px;
@@ -247,6 +253,15 @@ footer{
     <div class="card-body">
       <div class="card-title">Messages clients</div>
       <div class="card-desc">Veille · Présentation · Complet<br/>FR / EN · Porquerolles & Tapas</div>
+    </div>
+    <div class="card-arrow">›</div>
+  </a>
+
+  <a class="card card-resa" href="plateformes.html">
+    <div class="card-icon">🗓️</div>
+    <div class="card-body">
+      <div class="card-title">Plateformes & résas</div>
+      <div class="card-desc">GYG · Viator · Airbnb · Wix<br/>Liens d'avis · Registre</div>
     </div>
     <div class="card-arrow">›</div>
   </a>

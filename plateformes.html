@@ -76,6 +76,10 @@ h2{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.2em;text-trans
     <div class="t"><span class="dot" style="background:#ea4335"></span>Mails résas</div>
     <div class="d">marannahsail@gmail.com</div>
   </a>
+  <a class="tile main wide" href="sorties.html">
+    <div class="t"><span class="dot" style="background:#1f8a4c"></span>Prochaines sorties</div>
+    <div class="d">Toutes plateformes · WhatsApp client · alertes conflits</div>
+  </a>
   <a class="tile main wide hidden" id="tile-registre" href="#" target="_blank" rel="noopener">
     <div class="t"><span class="dot" style="background:#d4af37"></span>Registre des réservations</div>
     <div class="d">Google Sheet · toutes plateformes · alerte doublons</div>
@@ -119,15 +123,15 @@ h2{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.2em;text-trans
   </a>
 </div>
 
-<h2>Prochaines sorties</h2>
-<div class="note" id="resa-note">
-  Bientôt ici : les réservations GYG + Viator lues automatiquement dans les mails,
-  avec un bouton WhatsApp par client et une alerte quand deux réservations tombent sur le même créneau.
-</div>
-
 </div>
 
 <script>
+// Clé privée de la page « Prochaines sorties » : passée une fois par le lien #k=…, gardée sur l'appareil
+if (location.hash.startsWith('#k=')) {
+  try { localStorage.setItem('vf_key', decodeURIComponent(location.hash.slice(3))); } catch (e) {}
+  history.replaceState(null, '', location.pathname);
+}
+
 // Lien du registre Google Sheet (rempli après installation du script)
 const REGISTRE_URL = 'https://docs.google.com/spreadsheets/d/1jtXdAw5TicwvdiM3hJtw-mMhCFxl24vWuwnQz8BNlRQ/edit?authuser=marannahsail@gmail.com';
 

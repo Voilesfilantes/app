@@ -26,18 +26,23 @@ let key = '';
 try { key = localStorage.getItem('vf_key') || ''; } catch (e) {}
 const msg = document.getElementById('msg'), f = document.getElementById('f');
 
-async function load() {
+async function load(extra) {
   if (!key) { msg.textContent = 'Clé absente : ouvre une fois le lien privé reçu (…plateformes.html#k=…) sur cet appareil.'; return; }
-  msg.hidden = false; msg.textContent = 'Chargement…';
+  msg.hidden = false; msg.textContent = extra ? 'Mise à jour…' : 'Chargement…';
   try {
-    const r = await fetch(API + '?json=1&k=' + encodeURIComponent(key), { credentials: 'omit' });
+    const r = await fetch(API + '?json=1&k=' + encodeURIComponent(key) + (extra || ''), { credentials: 'omit' });
     const d = await r.json();
     f.srcdoc = d.html; f.hidden = false; msg.hidden = true;
   } catch (e) {
     msg.textContent = 'Impossible de charger les sorties (clé invalide ou pas de réseau).';
   }
 }
-document.getElementById('reload').onclick = load;
+document.getElementById('reload').onclick = () => load();
+// boutons « Je l'ai acceptée / refusée » de la liste
+window.addEventListener('message', ev => {
+  const d = ev.data || {};
+  if (d.vf && /^(ok|refus)$/.test(d.act) && d.ref) load('&act=' + d.act + '&ref=' + encodeURIComponent(d.ref));
+});
 load();
 </script>
 </body>
